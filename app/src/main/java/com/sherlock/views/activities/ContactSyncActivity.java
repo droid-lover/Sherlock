@@ -123,8 +123,26 @@ public class ContactSyncActivity extends AppCompatActivity {
 
         Log.d("getContactList", "data=" + mContactList.size());
         mUniqueContactList = removeDuplicates(mContactList);
+
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                setContactRecyclerView(mUniqueContactList);
+            }
+        });
     }
 
+    private void setContactRecyclerView(ArrayList<UserContact> contactsList) {
+        if (mContactList.size() > 0) {
+            emptyTextView.setVisibility(View.GONE);
+            mContactsAdapter = new ContactsAdapter(ContactSyncActivity.this, contactsList);
+            contactsRecyclerView.setAdapter(mContactsAdapter);
+        } else {
+            contactsRecyclerView.setVisibility(View.GONE);
+            emptyTextView.setVisibility(View.VISIBLE);
+        }
+    }
 
 
     /**
