@@ -28,7 +28,7 @@
         android:layout_below="@id/app_name"
         android:gravity="center"
         android:textStyle="bold"
-        android:text="an app which reads your inbox msgs"
+        android:text="an app which reads your phone data"
         android:textColor="@color/colorWhite"
         android:textSize="18sp" />
 
