@@ -17,11 +17,16 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.sherlock.R;
+import com.sherlock.adapters.ContactsAdapter;
 import com.sherlock.models.UserContact;
 
 import java.util.ArrayList;
@@ -30,6 +35,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ContactSyncActivity extends AppCompatActivity {
@@ -40,12 +46,19 @@ public class ContactSyncActivity extends AppCompatActivity {
     private ArrayList<UserContact> mUniqueContactList = new ArrayList<>();
     public static final int READ_CONTACTS_PERMISSIONS_REQUEST = 100;
 
+    @BindView(R.id.rv_contacts)
+    RecyclerView contactsRecyclerView;
+    @BindView(R.id.tv_empty)
+    TextView emptyTextView;
+    private ContactsAdapter mContactsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_sync);
         ButterKnife.bind(this);
+
+        contactsRecyclerView.setLayoutManager(new LinearLayoutManager(ContactSyncActivity.this));
 
         fetchContacts();
     }
@@ -108,8 +121,10 @@ public class ContactSyncActivity extends AppCompatActivity {
             cursor.close();
         }
 
-        Log.d("getContactList","data="+ mContactList.size() );
+        Log.d("getContactList", "data=" + mContactList.size());
+        mUniqueContactList = removeDuplicates(mContactList);
     }
+
 
 
     /**

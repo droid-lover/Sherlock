@@ -6,4 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".views.activities.ContactSyncActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/empty_contact_list"/>
+
 </android.support.constraint.ConstraintLayout>
